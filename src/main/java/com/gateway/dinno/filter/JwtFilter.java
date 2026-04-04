@@ -48,8 +48,15 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
             }
 
             String userId = jwtService.getUserIdFromToken(token);
+            String email = jwtService.getEmailFromToken(token);
+
             return chain.filter(exchange.mutate()
-                    .request(r -> r.header("X-User-Id", userId))
+                    .request(r -> {
+                        r.header("X-User-Id", userId);
+                        if (email != null) {
+                            r.header("X-User-Email", email);
+                        }
+                    })
                     .build());
         });
     }

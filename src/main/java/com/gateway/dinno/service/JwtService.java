@@ -31,4 +31,13 @@ public class JwtService {
 
         return claims.getSubject();
     }
+
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("email", String.class);
+    }
 }
