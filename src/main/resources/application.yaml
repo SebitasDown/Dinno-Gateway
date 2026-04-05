@@ -23,7 +23,7 @@ spring:
 
 
         - id: user_route
-          uri: lb://user-service
+          uri: lb://Dinno-Users
           predicates:
             - Path=/api/users/**
           filters:
