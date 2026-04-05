@@ -14,7 +14,7 @@ public class JwtService {
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(SECRET_KEY)
+                    .setSigningKey(SECRET_KEY.getBytes(java.nio.charset.StandardCharsets.UTF_8))
                     .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
@@ -26,7 +26,7 @@ public class JwtService {
 
     public String getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(SECRET_KEY.getBytes(java.nio.charset.StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -35,7 +35,7 @@ public class JwtService {
 
     public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(SECRET_KEY.getBytes(java.nio.charset.StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
 
