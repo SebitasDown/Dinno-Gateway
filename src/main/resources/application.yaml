@@ -1,28 +1,38 @@
 server:
   port: 8080
-
 spring:
   application:
     name: gateway-service
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
       discovery:
         locator:
           enabled: true
       routes:
-        - id: example_route
-          uri: lb://user-service
+
+        - id: auth_route
+          uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
+
+
+        - id: user_route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
           filters:
             - JwtFilter
-
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:https://dinno-eurekaserver-1.onrender.com/eureka/}
     fetch-registry: true
     register-with-eureka: true
-
 jwt:
   secret: ${JWT_SECRET:default_secret_key_change_me_in_production}
