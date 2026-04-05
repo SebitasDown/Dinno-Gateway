@@ -18,7 +18,8 @@ public class JwtService {
                     .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-
+            e.printStackTrace();
+            System.out.println("Error JWT: " + e.getMessage());
             return false;
         }
     }
