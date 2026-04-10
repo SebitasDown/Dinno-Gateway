@@ -21,6 +21,10 @@ spring:
           predicates:
             - Path=/api/auth/**
 
+        - id: pocket-service
+          uri: lb://dinno-pocket 
+            - Path=/api/wallets/**, /api/transactions/**
+
 
         - id: user_route
           uri: lb://Dinno-Users
