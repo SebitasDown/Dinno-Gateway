@@ -21,12 +21,6 @@ spring:
           predicates:
             - Path=/api/auth/**
 
-        - id: pocket-service
-          uri: lb://dinno-pocket
-          predicates:
-            - Path=/api/wallets/**,/api/transactions/**
-          filters:
-            - JwtFilter
 
         - id: user_route
           uri: lb://Dinno-Users
@@ -34,15 +28,27 @@ spring:
             - Path=/api/users/**
           filters:
             - JwtFilter
-            
+
+        - id: dinno_ia_route
+          uri: lb://Dinno-IA
+          predicates:
+            - Path=/api/wallet/**
+          filters:
+            - JwtFilter
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:https://dinno-eurekaserver-1.onrender.com/eureka/}
     fetch-registry: true
     register-with-eureka: true
-  instance:
-    prefer-ip-address: true
-
 jwt:
   secret: ${JWT_SECRET}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
