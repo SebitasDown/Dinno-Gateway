@@ -29,6 +29,13 @@ spring:
           filters:
             - JwtFilter
 
+        - id: pocket_route
+          uri: lb://Dinno-Pocket
+          predicates:
+            - Path=/api/wallets/**, /api/transactions/**
+          filters:
+            - JwtFilter
+
         - id: dinno_ia_route
           uri: lb://Dinno-IA
           predicates:
